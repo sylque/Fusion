@@ -27,7 +27,13 @@ typedef struct {
     float gyroscopeRange;
     float accelerationRejection;
     float magneticRejection;
+
+    // Legacy combined trigger period (for backward compatibility)
     unsigned int recoveryTriggerPeriod;
+
+    // New per-sensor trigger periods (in samples)
+    unsigned int accelerationRecoveryTriggerPeriod;
+    unsigned int magneticRecoveryTriggerPeriod;
 } FusionAhrsSettings;
 
 /**

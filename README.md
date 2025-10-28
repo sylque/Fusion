@@ -49,7 +49,15 @@ The AHRS algorithm settings are defined by the `FusionAhrsSettings` structure an
 | `gyroscopeRange`        | Gyroscope range (in degrees per second).  Angular rate recovery will activate if the gyroscope measurement exceeds 98% of this value.  A value of zero will disable this feature.  The value should be set to the range specified in the gyroscope datasheet. |
 | `accelerationRejection` | Threshold (in degrees) used by the acceleration rejection feature.  A value of zero will disable this feature.  A value of 10 degrees is appropriate for most applications.                                                                                   |
 | `magneticRejection`     | Threshold (in degrees) used by the magnetic rejection feature.  A value of zero will disable the feature. A value of 10 degrees is appropriate for most applications.                                                                                         |
-| `recoveryTriggerPeriod` | Acceleration and magnetic recovery trigger period (in samples).  A value of zero will disable the acceleration and magnetic rejection features.  A period of 5 seconds is appropriate for most applications.                                                  |
+| `recoveryTriggerPeriod` | **(Deprecated)** Combined recovery trigger period (in samples). Replaced by the independent settings below. Retained for backward compatibility.                                                  |
+| `accelerationRecoveryTriggerPeriod` | Acceleration recovery trigger period, measured in gyroscope/accelerometer updates. A value of zero disables the acceleration rejection feature. A period equivalent to 5 seconds is appropriate for most applications.                                                  |
+| `magneticRecoveryTriggerPeriod` | Magnetic recovery trigger period, measured in magnetometer updates. A value of zero disables the magnetic rejection feature. A period equivalent to 5 seconds is appropriate for most applications.                                     |
+
+> **Deprecation notice:**<br>
+> IMU and magnetometer measurements often run at different sample rates, so using a single recovery period for both sensors can lead to inappropriate recovery behavior.<br>
+> The `recoveryTriggerPeriod` field is therefore deprecated and replaced by the separate fields `accelerationRecoveryTriggerPeriod` and `magneticRecoveryTriggerPeriod`.<br>
+> For backward compatibility, if either of the new fields is set to zero, it will automatically default to the value of `recoveryTriggerPeriod`.
+
 
 ### Algorithm internal states
 
